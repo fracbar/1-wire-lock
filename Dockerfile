@@ -2,7 +2,7 @@ FROM debian:bookworm-slim
 
 # Install dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    curl \
+    ow-shell \
     knxd-tools \
     ca-certificates \
     && rm -rf /var/lib/apt/lists/*
@@ -19,7 +19,7 @@ RUN chmod +x /usr/local/bin/1-wire-lock.sh /usr/local/bin/liveness-probe.sh
 ENV ALLOWED_KEY_LIST=""
 ENV KNX_LOCK_ADDRESS=""
 ENV KNXD_ADDRESS="ip:localhost"
-ENV OW_HTTP_ADDRESS="http://localhost:2121"
+ENV OW_ADDRESS="localhost:4304"
 ENV OW_BUS_ADDRESS=""
 ENV SLEEP_AFTER="7"
 

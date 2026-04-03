@@ -5,7 +5,7 @@ IFS=' ' read -r -a ALLOWED_KEYS <<< ${ALLOWED_KEY_LIST:-""}
 KNXD_ADDRESS=${KNXD_ADDRESS:-"ip:localhost"}
 KNX_LOCK_ADDRESS=${KNX_LOCK_ADDRESS:-""}
 
-OW_HTTP_ADDRESS=${OW_HTTP_ADDRESS:-"http://localhost:2121"}
+OW_ADDRESS=${OW_ADDRESS:-"localhost:4304"}
 OW_BUS_ADDRESS=${OW_BUS_ADDRESS-""}
 SLEEP_AFTER=7
 
@@ -42,17 +42,14 @@ while true; do
   start=$(date +%s%3N)
 
   # echo "check keys after ${diff}"
-  DEVICE_OUTPUT=$(curl -s --retry 3 --retry-connrefused "${OW_HTTP_ADDRESS}${OW_BUS_ADDRESS}/")
+  out=$(owdir -s ${OW_ADDRESS} ${OW_BUS_ADDRESS})
 
-  # Parse HTML output and extract 1-Wire device keys
-  # Extract all device IDs from HTML href links (format: XX.XXXXXXXXXXXX)
-  FOUND_KEYS=$(echo "$DEVICE_OUTPUT" | grep -o '[A-F0-9]\{2\}\.[A-F0-9]\{12\}' | sort -u)
-
-  for key in $FOUND_KEYS; do
+  for k in $out; do
+    key=$(basename "$k")
     echo "Found key ${key}, checking"
     if [[ " ${ALLOWED_KEYS[*]} " =~ [[:space:]]${key}[[:space:]] ]]; then
       echo "Key ${key} granted access, opening door and sleep for ${SLEEP_AFTER} seconds"
-      # knxtool groupswrite ${KNXD_ADDRESS} "${KNX_LOCK_ADDRESS}" 1
+      # knxtool groupswrite ${KNXD_ADDRESS} "${KEY_ADDRESS}" 1
       sleep ${SLEEP_AFTER}
     else
       echo "Access denied for key ${key}!"
