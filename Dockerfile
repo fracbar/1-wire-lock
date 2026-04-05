@@ -2,6 +2,7 @@ FROM debian:bookworm-slim
 
 # Install dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    procps \
     ow-shell \
     knxd-tools \
     ca-certificates \
