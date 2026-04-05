@@ -18,7 +18,7 @@ RUN chmod +x /usr/local/bin/1-wire-lock.sh /usr/local/bin/liveness-probe.sh
 
 # Set default environment variables
 ENV ALLOWED_KEY_LIST=""
-ENV KNX_LOCK_ADDRESS=""
+ENV KNX_UNLOCK_ADDRESS=""
 ENV KNXD_ADDRESS="ip:localhost"
 ENV OW_ADDRESS="localhost:4304"
 ENV OW_BUS_ADDRESS=""

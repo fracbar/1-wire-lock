@@ -3,7 +3,7 @@
 IFS=' ' read -r -a ALLOWED_KEYS <<< ${ALLOWED_KEY_LIST:-""}
 
 KNXD_ADDRESS=${KNXD_ADDRESS:-"ip:localhost"}
-KNX_LOCK_ADDRESS=${KNX_LOCK_ADDRESS:-""}
+KNX_UNLOCK_ADDRESS=${KNX_UNLOCK_ADDRESS:-""}
 
 OW_ADDRESS=${OW_ADDRESS:-"localhost:4304"}
 OW_BUS_ADDRESS=${OW_BUS_ADDRESS-""}
@@ -50,7 +50,7 @@ while true; do
     echo "Found key ${key}, checking"
     if [[ " ${ALLOWED_KEYS[*]} " =~ [[:space:]]${key}[[:space:]] ]]; then
       echo "Key ${key} granted access, opening door and sleep for ${SLEEP_AFTER} seconds"
-      knxtool groupswrite ${KNXD_ADDRESS} "${KEY_ADDRESS}" 1
+      knxtool groupswrite ${KNXD_ADDRESS} "${KNX_UNLOCK_ADDRESS}" 1
       sleep ${SLEEP_AFTER}
     else
       echo "Access denied for key ${key}!"
