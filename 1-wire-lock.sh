@@ -14,8 +14,8 @@ SLEEP_AFTER=7
 if [ ! -n "$ALLOWED_KEY_LIST" ]; then
     echo "Allowed key list is empty, please set ALLOWED_KEY_LIST environment variable with space separated list of allowed keys"
     exit 1
-elif [ -z "$KNX_LOCK_ADDRESS" ]; then
-    echo "KNX lock address is not set, please set KNX_LOCK_ADDRESS environment variable"
+elif [ -z "$KNX_UNLOCK_ADDRESS" ]; then
+    echo "KNX lock address is not set, please set KNX_UNLOCK_ADDRESS environment variable"
     exit 1
 elif [ -z "$OW_BUS_ADDRESS" ]; then
     echo "OW bus address is not set, please set OW_BUS_ADDRESS (e.g. /uncached/bus.1) environment variable"
