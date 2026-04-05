@@ -7,6 +7,7 @@ KNX_LOCK_ADDRESS=${KNX_LOCK_ADDRESS:-""}
 
 OW_ADDRESS=${OW_ADDRESS:-"localhost:4304"}
 OW_BUS_ADDRESS=${OW_BUS_ADDRESS-""}
+OW_BUS_FILTER=${OW_BUS_FILTER-""}
 SLEEP_AFTER=7
 
 # validation
@@ -42,14 +43,14 @@ while true; do
   start=$(date +%s%3N)
 
   # echo "check keys after ${diff}"
-  out=$(owdir -s ${OW_ADDRESS} ${OW_BUS_ADDRESS})
+  out=$(owdir -s ${OW_ADDRESS} ${OW_BUS_ADDRESS} | grep "${OW_BUS_FILTER}")
 
   for k in $out; do
     key=$(basename "$k")
     echo "Found key ${key}, checking"
     if [[ " ${ALLOWED_KEYS[*]} " =~ [[:space:]]${key}[[:space:]] ]]; then
       echo "Key ${key} granted access, opening door and sleep for ${SLEEP_AFTER} seconds"
-      # knxtool groupswrite ${KNXD_ADDRESS} "${KEY_ADDRESS}" 1
+      knxtool groupswrite ${KNXD_ADDRESS} "${KEY_ADDRESS}" 1
       sleep ${SLEEP_AFTER}
     else
       echo "Access denied for key ${key}!"

@@ -22,6 +22,7 @@ ENV KNX_LOCK_ADDRESS=""
 ENV KNXD_ADDRESS="ip:localhost"
 ENV OW_ADDRESS="localhost:4304"
 ENV OW_BUS_ADDRESS=""
+ENV OW_BUS_FILTER=""
 ENV SLEEP_AFTER="7"
 
 # Run as non-root user
