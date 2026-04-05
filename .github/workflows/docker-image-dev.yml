@@ -35,7 +35,7 @@ jobs:
         run: echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       # Push
-      - name: Build and push
+      - name: "Build and push with tag dev-${{ github.sha }}"
         id: docker_build
         uses: docker/build-push-action@v5
         with:
